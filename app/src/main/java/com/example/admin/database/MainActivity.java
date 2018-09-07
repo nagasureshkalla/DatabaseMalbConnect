@@ -21,8 +21,9 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
 
     // TODO - insert your themoviedb.org API KEY here
-    private final static String API_KEY = "FMibbCik-KXxI0-l8EQtCcqf6fHm2kct";
-
+    private final static String API_KEY = "VNNk2xmBYia8LLhNcaUAQNckrMlXiLCI";
+    List<Data> list;
+    Call<List<Data>> call;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,21 +38,20 @@ public class MainActivity extends AppCompatActivity {
         final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyle);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
 
-        Call<Data> call = apiService.getId(API_KEY);
-        call.enqueue(new Callback<Data>() {
+        call = apiService.getData(API_KEY);
+        call.enqueue(new Callback<List<Data>>() {
             @Override
-            public void onResponse(Call<Data>call, Response<Data> response) {
-                List<Data> id = response.body().getId();
-                recyclerView.setAdapter(new Adapter(id, R.layout.list_item_movie, getApplicationContext()));
+            public void onResponse(Call<List<Data>> call, Response<List<Data>> response) {
+
+                List<Data> list = response.body();
+                recyclerView.setAdapter(new Adapter(list, R.layout.list_item_movie, getApplicationContext()));
                 Toast.makeText(MainActivity.this, "Succesfully Loaded", Toast.LENGTH_SHORT).show();
             }
 
             @Override
-            public void onFailure(Call<Data> call, Throwable t) {
-                // Log error here since request failed
+            public void onFailure(Call<List<Data> > call, Throwable t) {
                 Toast.makeText(MainActivity.this, "Failed to Load data", Toast.LENGTH_SHORT).show();
             }
         });

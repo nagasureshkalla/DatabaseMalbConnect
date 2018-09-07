@@ -7,7 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
 
-    public static final String BASE_URL = "https://mlab.com/retrofit_example/";
+    public static final String BASE_URL = "https://api.mlab.com/api/1/databases/retrofit_example/";
 
     private static Retrofit retrofit = null;
 

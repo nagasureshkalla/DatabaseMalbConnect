@@ -15,26 +15,25 @@ import com.example.admin.database.model.Data;
 import java.util.List;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
-
-    private List<Data> id;
+    List<Data> list;
     private int rowLayout;
     private Context context;
 
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         LinearLayout moviesLayout;
-        TextView id;
+        TextView id,title;
 
 
         public ViewHolder(View v) {
             super(v);
-
-            id = (TextView) v.findViewById(R.id.id);
+            id = v.findViewById(R.id.id);
+            title=v.findViewById(R.id.title);
         }
     }
 
-    public Adapter(List<Data> id, int rowLayout, Context context) {
-        this.id = id;
+    public Adapter(List<Data> list,int rowLayout, Context context) {
+        this.list=list;
         this.rowLayout = rowLayout;
         this.context = context;
     }
@@ -42,18 +41,19 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     @Override
     public Adapter.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                       int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(rowLayout, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(rowLayout, parent,false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.id.setText(id.toString());
+        holder.id.setText(list.get(position).getId());
+        holder.title.setText(list.get(position).getTitle());
     }
 
     @Override
     public int getItemCount() {
-        return id.size();
+        return 2;
     }
 
 }
